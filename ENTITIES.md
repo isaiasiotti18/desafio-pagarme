@@ -4,6 +4,7 @@
 
 ### Attributes
 
+* Transaction_Id
 * Value
 * Description
 * Payment_Method (Entity PaymentMethod)
@@ -13,7 +14,7 @@
   * Valid_Thru
   * Security_Code
 
-## Client
+## Customer
 
 ### Attributes
 
@@ -22,7 +23,8 @@
 * CPF
 * Email
 * Password
-* Balance
+* Paid_Balance
+* Waiting_Funds
 
 ## Payment Method
 
@@ -30,7 +32,7 @@
 
 * PaymentMethod_Id
 * Card_Type
-* Client_Id
+* Customer_Id
 * Card_Number
 * Cardhold_Name
 * Valid_Thru
@@ -41,7 +43,7 @@
 ### Attributes
 
 * Payable_Id
-* Client_Id
+* Customer_Id
 * Status
 * Payment_Date
 * Fee
