@@ -22,7 +22,7 @@ enum PayableStatus {
 }
 
 model Customer {
-  id               String   @id @default(cuid())
+  id               String   @id @db.Uuid
   name             String
   Cpf              String   @unique
   email            String   @unique

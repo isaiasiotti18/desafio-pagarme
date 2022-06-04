@@ -20,6 +20,7 @@
         "prettier"
     ],
     "rules": {
+      "consistent-return": "off",
       "import/no-unresolved": "off",
       "import/no-cycle": "off",
       "no-empty-function": ["error", { "allow": ["constructors"] }],
