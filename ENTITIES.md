@@ -38,7 +38,7 @@
 * Valid_Thru
 * Security_Code
 
-## Payables
+## Payable
 
 ### Attributes
 
