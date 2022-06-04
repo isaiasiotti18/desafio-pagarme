@@ -15,7 +15,7 @@ export default class CreateCustomerDto {
   name: string;
 
   @IsCPF()
-  Cpf: string;
+  cpf: string;
 
   @IsEmail()
   email: string;

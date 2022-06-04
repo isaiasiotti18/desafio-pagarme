@@ -21,51 +21,74 @@ enum PayableStatus {
   waiting_funds
 }
 
-model Customer {
-  id               String   @id @db.Uuid
-  name             String
-  Cpf              String   @unique
-  email            String   @unique
-  password         String
+model Client {
+  id               String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name             String   @unique @db.VarChar(50)
+  cnpj             String   @unique @db.VarChar(20)
+  email            String   @unique @db.VarChar(50)
+  password         String   @db.VarChar(100)
   availableBalance Decimal  @default(0) @db.Money
   waitingFunds     Decimal  @default(0) @db.Money
   created_at       DateTime @default(now())
   updated_at       DateTime @default(now())
 
+  transaction Transaction[]
+  payable     Payable[]
+}
+
+model Customer {
+  id            String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name          String          @db.VarChar(50)
+  cpf           String          @unique @db.VarChar(16)
+  email         String          @unique @db.VarChar(50)
+  password      String          @db.VarChar(100)
+  created_at    DateTime        @default(now())
+  updated_at    DateTime        @default(now())
   paymentMethod PaymentMethod[]
+  transaction   Transaction[]
 }
 
 model PaymentMethod {
-  paymentMethodId String   @id @db.Uuid
-  cardType        CardType @unique
-  cardNumber      String   @unique
-  cardHolderName  String   @unique
-  validThru       DateTime @db.Date
+  paymentMethodId       String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  cardType              CardType @unique
+  cardNumber            String   @unique @db.VarChar(50)
+  cardHolderName        String   @unique @db.VarChar(25)
+  validThru             DateTime @db.Date
+  cardVerificationValue Int      @unique @db.SmallInt
+
+  customer   Customer? @relation(fields: [customerId], references: [id])
+  customerId String?   @db.Uuid
 
   transaction Transaction[]
-
-  customer   Customer? @relation(fields: [CustomerId], references: [id])
-  CustomerId String?
 }
 
 model Transaction {
-  transactionId String  @id @db.Uuid
+  transactionId String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   value         Decimal @db.Money
   description   String  @default("No description")
 
-  paymentMethod   PaymentMethod? @relation(fields: [paymentMethodId], references: [paymentMethodId])
-  paymentMethodId String?        @db.Uuid
-
   payable Payable?
+
+  customer   Customer @relation(fields: [customerId], references: [id])
+  customerId String   @db.Uuid
+
+  client   Client @relation(fields: [clientId], references: [id])
+  clientId String @db.Uuid
+
+  paymentMethod   PaymentMethod @relation(fields: [paymentMethodId], references: [paymentMethodId])
+  paymentMethodId String        @db.Uuid
 }
 
 model Payable {
-  payableId   String        @id @db.Uuid
+  payableId   String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   value       Decimal       @db.Money
   status      PayableStatus @unique
   paymentDate DateTime      @db.Date
-  Fee         Int
+  fee         Int
 
   transaction   Transaction @relation(fields: [transactionId], references: [transactionId])
   transactionId String      @unique @db.Uuid
+
+  client   Client? @relation(fields: [clientId], references: [id])
+  clientId String? @db.Uuid
 }

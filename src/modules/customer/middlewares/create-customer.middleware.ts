@@ -8,12 +8,12 @@ export default async function createCustomerMiddleware(
   next: NextFunction,
 ) {
   try {
-    const { name, Cpf, email, password } = request.body;
+    const { name, cpf, email, password } = request.body;
 
     const createCustomerValidate = new CreateCustomerDto();
 
     createCustomerValidate.name = name;
-    createCustomerValidate.Cpf = Cpf;
+    createCustomerValidate.cpf = cpf;
     createCustomerValidate.email = email;
     createCustomerValidate.password = password;
 

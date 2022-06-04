@@ -7,13 +7,13 @@ export default async function createCustomerRepository(
 ) {
   const prisma = new PrismaClient();
 
-  const { name, Cpf, email, password } = createCustomerDto;
+  const { name, cpf, email, password } = createCustomerDto;
 
   const passwordHash = await bcrypt.hash(password, 10);
 
   const findCustomerByCpf = await prisma.customer.findUnique({
     where: {
-      Cpf,
+      cpf,
     },
   });
 
@@ -24,7 +24,7 @@ export default async function createCustomerRepository(
   const newCustomer = await prisma.customer.create({
     data: {
       name,
-      Cpf,
+      cpf,
       email,
       password: passwordHash,
     },

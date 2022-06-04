@@ -6,11 +6,11 @@ export default async function createCustomerController(
   response: Response,
 ) {
   try {
-    const { name, Cpf, email, password } = request.body;
+    const { name, cpf, email, password } = request.body;
 
     const createCustomer = await createCustomerRepository({
       name,
-      Cpf,
+      cpf,
       email,
       password,
     });
