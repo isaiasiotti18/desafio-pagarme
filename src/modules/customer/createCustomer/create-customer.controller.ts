@@ -1,5 +1,5 @@
 import { Response, Request } from 'express';
-import createCustomerRepository from '../repositories/create-customer.repository';
+import createCustomerService from './create-customer.service';
 
 export default async function createCustomerController(
   request: Request,
@@ -8,7 +8,7 @@ export default async function createCustomerController(
   try {
     const { name, cpf, email, password } = request.body;
 
-    const createCustomer = await createCustomerRepository({
+    const newCustomer = await createCustomerService({
       name,
       cpf,
       email,
@@ -16,7 +16,7 @@ export default async function createCustomerController(
     });
 
     return response.json({
-      ...createCustomer,
+      ...newCustomer,
       password: undefined,
     });
   } catch (error: any) {

@@ -1,21 +1,19 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '../../../config/database/prisma-client';
 import CreateTransactionDto from '../dtos/create-transaction.dto';
 
-export default async function createCustomerTransaction(
+export default async function createTransaction(
   createTransactionDto: CreateTransactionDto,
 ) {
-  const { value, description, paymentMethodId, customerId } =
+  const { value, description, paymentMethodId, customerId, clientId } =
     createTransactionDto;
-
-  const prisma = new PrismaClient();
 
   const newTransaction = await prisma.transaction.create({
     data: {
       value,
       description,
       paymentMethodId,
-      clientId: '308f41ca-e580-4292-b4e5-9926cc65e6d0',
       customerId,
+      clientId,
     },
   });
 
