@@ -1,6 +1,6 @@
 import { validate } from 'class-validator';
 import { Request, Response, NextFunction } from 'express';
-import CreateCustomerDto from './dtos/create-customer.dto';
+import CreateCustomerDto from '../createCustomer/dtos/create-customer.dto';
 
 export default async function createCustomerMiddleware(
   request: Request,

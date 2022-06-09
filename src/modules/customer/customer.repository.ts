@@ -1,4 +1,3 @@
-import * as bcrypt from 'bcryptjs';
 import { prisma } from '../../config/database/prisma-client';
 import CreateCustomerDto from './createCustomer/dtos/create-customer.dto';
 import { CustomerRepositoryInterface } from './interfaces/customer-repository.interface';
@@ -10,24 +9,12 @@ export default class CustomerRepository implements CustomerRepositoryInterface {
   ): Promise<CustomerInterface> {
     const { name, cpf, email, password } = createCustomerDto;
 
-    const passwordHash = await bcrypt.hash(password, 10);
-
-    const findCustomerByCpf = await prisma.customer.findUnique({
-      where: {
-        cpf,
-      },
-    });
-
-    if (findCustomerByCpf) {
-      throw new Error('Verify the informations.');
-    }
-
     const newCustomer = await prisma.customer.create({
       data: {
         name,
         cpf,
         email,
-        password: passwordHash,
+        password,
       },
     });
 
@@ -37,7 +24,7 @@ export default class CustomerRepository implements CustomerRepositoryInterface {
   }
 
   async exists(email: string): Promise<boolean> {
-    const customer = prisma.customer.findUnique({
+    const customer = await prisma.customer.findUnique({
       where: {
         email,
       },

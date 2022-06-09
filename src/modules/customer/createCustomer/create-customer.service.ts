@@ -1,20 +1,27 @@
+import * as bcrypt from 'bcryptjs';
+import { CustomerRepositoryInterface } from '../interfaces/customer-repository.interface';
+import { CustomerInterface } from '../interfaces/customer.interface';
 import CreateCustomerDto from './dtos/create-customer.dto';
-import CustomerRepository from '../customer.repository';
 
-export default async function createCustomerService(
-  createCustomerDto: CreateCustomerDto,
-) {
-  const customerRepository = new CustomerRepository();
+export default class CreateCustomerService {
+  constructor(private customerRepository: CustomerRepositoryInterface) {}
 
-  const customerExists = await customerRepository.exists(
-    createCustomerDto.email,
-  );
+  async execute(
+    createCustomerDto: CreateCustomerDto,
+  ): Promise<CustomerInterface> {
+    const customerExists = await this.customerRepository.exists(
+      createCustomerDto.email,
+    );
 
-  if (customerExists) throw new Error('Customer already exists!');
+    if (customerExists) throw new Error('Customer already exists!');
 
-  const newCustomer = await customerRepository.create({
-    ...createCustomerDto,
-  });
+    const passwordHash = await bcrypt.hash(createCustomerDto.password, 10);
 
-  return newCustomer;
+    const newCustomer = await this.customerRepository.create({
+      ...createCustomerDto,
+      password: passwordHash,
+    });
+
+    return newCustomer;
+  }
 }

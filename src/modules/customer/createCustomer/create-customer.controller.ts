@@ -1,27 +1,28 @@
 import { Response, Request } from 'express';
-import createCustomerService from './create-customer.service';
+import CreateCustomerService from './create-customer.service';
 
-export default async function createCustomerController(
-  request: Request,
-  response: Response,
-) {
-  try {
-    const { name, cpf, email, password } = request.body;
+export default class CreateCustomerController {
+  constructor(private createCustomerService: CreateCustomerService) {}
 
-    const newCustomer = await createCustomerService({
-      name,
-      cpf,
-      email,
-      password,
-    });
+  async handle(request: Request, response: Response) {
+    try {
+      const { name, cpf, email, password } = request.body;
 
-    return response.json({
-      ...newCustomer,
-      password: undefined,
-    });
-  } catch (error: any) {
-    response.status(400).json({
-      message: error?.message,
-    });
+      const newCustomer = await this.createCustomerService.execute({
+        name,
+        cpf,
+        email,
+        password,
+      });
+
+      return response.json({
+        ...newCustomer,
+        password: undefined,
+      });
+    } catch (error: any) {
+      response.status(400).json({
+        message: error?.message,
+      });
+    }
   }
 }

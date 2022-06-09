@@ -1,5 +1,5 @@
-import { CardType } from './../../paymentMethod/interfaces/enums/cardType.enum';
 import { PrismaClient } from '@prisma/client';
+import { CardType } from '../../paymentMethod/interfaces/enums/cardType.enum';
 import CreateTransactionDto from '../dtos/create-transaction.dto';
 import createTransaction from '../repositories/create-transaction.repository';
 
@@ -54,7 +54,7 @@ export default async function paymentIntentService(
   const newPayable = await prisma.payable.create({
     data: {
       value,
-      status: ,
+      status: '',
       paymentDate,
       fee,
     },
