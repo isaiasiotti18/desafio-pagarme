@@ -1,9 +1,8 @@
 import { Router } from 'express';
 
-import createCustomerRoute from 'modules/customer/routes/create-customer.route';
-
-import transactionProcessingRoute from 'modules/transaction/routes/transaction-processing.routes';
-import transactionsListRoute from 'modules/transaction/routes/transactions-list.routes';
+import transactionProcessingRoute from '../../modules/transaction/routes/transaction-processing.routes';
+import transactionsListRoute from '../../modules/transaction/routes/transactions-list.routes';
+import createCustomerRoute from '../../modules/customer/routes/create-customer.route';
 
 const routes = Router();
 
