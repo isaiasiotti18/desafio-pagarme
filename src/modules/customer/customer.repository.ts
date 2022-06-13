@@ -1,5 +1,5 @@
 import { prisma } from '../../config/database/prisma-client';
-import CreateCustomerDto from './createCustomer/dtos/create-customer.dto';
+import CreateCustomerDto from './useCases/createCustomer/dtos/create-customer.dto';
 import { CustomerRepositoryInterface } from './interfaces/customer-repository.interface';
 import { CustomerInterface } from './interfaces/customer.interface';
 

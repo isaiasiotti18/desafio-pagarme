@@ -1,4 +1,4 @@
-import CreateCustomerDto from '../createCustomer/dtos/create-customer.dto';
+import CreateCustomerDto from '../useCases/createCustomer/dtos/create-customer.dto';
 import { CustomerInterface } from './customer.interface';
 
 export interface CustomerRepositoryInterface {
