@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createCustomerFactory } from '../useCases/createCustomer/create-customer.factory';
+import createCustomerFactory from '../useCases/createCustomer/create-customer.factory';
 import createCustomerMiddleware from '../middlewares/create-customer.middleware';
 
 const createCustomerRoute = Router();
