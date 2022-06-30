@@ -1,5 +1,6 @@
 import { Router } from 'express';
 
+import createClientRoute from 'modules/client/routes/create-client.route';
 import transactionProcessingRoute from '../../modules/transaction/routes/transaction-processing.routes';
 import transactionsListRoute from '../../modules/transaction/routes/transactions-list.routes';
 import createCustomerRoute from '../../modules/customer/routes/create-customer.route';
@@ -12,6 +13,8 @@ routes.use('/transactions', [
 ]);
 
 routes.use('/customers', [createCustomerRoute]);
+
+routes.use('/clients', [createClientRoute]);
 
 routes.use('/auth', async (request, response) =>
   response.json({

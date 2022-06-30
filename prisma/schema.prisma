@@ -50,9 +50,9 @@ model Customer {
 
 model PaymentMethod {
   paymentMethodId       String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  cardType              CardType @unique
+  cardType              CardType
   cardNumber            String   @unique @db.VarChar(50)
-  cardHolderName        String   @unique @db.VarChar(25)
+  cardHolderName        String   @db.VarChar(25)
   validThru             DateTime @db.Date
   cardVerificationValue Int      @unique @db.SmallInt
 
@@ -82,7 +82,7 @@ model Transaction {
 model Payable {
   payableId   String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   value       Decimal       @db.Money
-  status      PayableStatus @unique
+  status      PayableStatus
   paymentDate DateTime      @db.Date
   fee         Int
 
