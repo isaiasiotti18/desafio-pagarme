@@ -2,21 +2,14 @@ import { PayableStatus } from '@prisma/client';
 import { prisma } from 'config/database/prisma-client';
 import TransactionRepositoryInterface from 'modules/transaction/interfaces/transaction-repository.interface';
 import moment from 'moment';
-import CreatePaymentMethodDto from 'modules/paymentMethod/dtos/create-paymentMethod.dto';
 import { CardType } from '../../../paymentMethod/interfaces/enums/cardType.enum';
-import CreateTransactionDto from '../createTransaction/dtos/create-transaction.dto';
 import createTransaction from '../../repositories/create-transaction.repository';
+import CreatePaymentIntentDto from './dtos/create-payment-intent.dto';
 
 export default class PaymentIntentService {
-  constructor(
-    private readonly transactionRepository: TransactionRepositoryInterface,
-  ) {}
-
-  async execute(
-    createTransactionDto: CreateTransactionDto,
-    createPaymentMethodDto: CreatePaymentMethodDto,
-  ) {
-    const { value, description, customerId, clientId } = createTransactionDto;
+  async execute(createPaymentIntentDto: CreatePaymentIntentDto) {
+    const { value, description, customerId, clientId } =
+      createPaymentIntentDto.createTransactionDto;
 
     const {
       cardType,
@@ -24,7 +17,7 @@ export default class PaymentIntentService {
       cardHolderName,
       validThru,
       cardVerificationValue,
-    } = createPaymentMethodDto;
+    } = createPaymentIntentDto.createPaymentMethodDto;
 
     const client = await prisma.client.findUnique({
       where: {
