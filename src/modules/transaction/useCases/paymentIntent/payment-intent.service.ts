@@ -1,17 +1,30 @@
-import { PayableStatus, PrismaClient } from '@prisma/client';
+import { PayableStatus } from '@prisma/client';
+import { prisma } from 'config/database/prisma-client';
+import TransactionRepositoryInterface from 'modules/transaction/interfaces/transaction-repository.interface';
 import moment from 'moment';
+import CreatePaymentMethodDto from 'modules/paymentMethod/dtos/create-paymentMethod.dto';
 import { CardType } from '../../../paymentMethod/interfaces/enums/cardType.enum';
-import CreateTransactionDto from '../../dtos/create-transaction.dto';
+import CreateTransactionDto from '../createTransaction/dtos/create-transaction.dto';
 import createTransaction from '../../repositories/create-transaction.repository';
 
 export default class PaymentIntentService {
-  constructor() {}
+  constructor(
+    private readonly transactionRepository: TransactionRepositoryInterface,
+  ) {}
 
-  async execute(createTransactionDto: CreateTransactionDto) {
-    const { value, description, paymentMethodId, customerId, clientId } =
-      createTransactionDto;
+  async execute(
+    createTransactionDto: CreateTransactionDto,
+    createPaymentMethodDto: CreatePaymentMethodDto,
+  ) {
+    const { value, description, customerId, clientId } = createTransactionDto;
 
-    const prisma = new PrismaClient();
+    const {
+      cardType,
+      cardNumber,
+      cardHolderName,
+      validThru,
+      cardVerificationValue,
+    } = createPaymentMethodDto;
 
     const client = await prisma.client.findUnique({
       where: {
@@ -25,9 +38,13 @@ export default class PaymentIntentService {
       },
     });
 
-    const paymentMethod = await prisma.paymentMethod.findUnique({
-      where: {
-        paymentMethodId,
+    const paymentMethod = await prisma.paymentMethod.create({
+      data: {
+        cardType,
+        cardNumber,
+        cardHolderName,
+        validThru,
+        cardVerificationValue,
       },
     });
 
@@ -37,13 +54,15 @@ export default class PaymentIntentService {
       );
     }
 
-    const newTransaction = createTransaction({
-      value,
-      description,
-      clientId: client.id,
-      customerId: customer.id,
-      paymentMethodId: paymentMethod.paymentMethodId,
-    });
+    const newTransaction = createTransaction(
+      {
+        value,
+        description,
+        clientId: client.id,
+        customerId: customer.id,
+      },
+      paymentMethod.paymentMethodId,
+    );
 
     let setStatus;
     let setFee;

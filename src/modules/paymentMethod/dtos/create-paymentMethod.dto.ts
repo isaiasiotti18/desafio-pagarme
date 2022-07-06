@@ -1,6 +1,6 @@
-import { CardType } from '../interfaces/enums/cardType.enum';
+import { CardType } from '@prisma/client';
 
-export default class PaymentMethodDto {
+export default class CreatePaymentMethodDto {
   cardType: CardType;
 
   cardNumber: string;
