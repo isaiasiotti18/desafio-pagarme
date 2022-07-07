@@ -1,5 +1,5 @@
 import { prisma } from 'config/database/prisma-client';
-import CreateTransactionDto from '../useCases/createTransaction/dtos/create-transaction.dto';
+import CreateTransactionDto from './dtos/create-transaction.dto';
 
 export default async function createTransaction(
   createTransactionDto: CreateTransactionDto,
@@ -11,9 +11,9 @@ export default async function createTransaction(
     data: {
       value,
       description,
-      customerId,
-      clientId,
+      clientId: '308f41ca-e580-4292-b4e5-9926cc65e6d0',
       paymentMethodId,
+      customerId,
     },
   });
 
