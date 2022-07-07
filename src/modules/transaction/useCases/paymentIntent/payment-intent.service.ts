@@ -1,9 +1,8 @@
 import { PayableStatus } from '@prisma/client';
 import { prisma } from 'config/database/prisma-client';
-import TransactionRepositoryInterface from 'modules/transaction/interfaces/transaction-repository.interface';
 import moment from 'moment';
 import { CardType } from '../../../paymentMethod/interfaces/enums/cardType.enum';
-import createTransaction from '../../repositories/create-transaction.repository';
+import createTransaction from '../createTransaction/create-transaction.function';
 import CreatePaymentIntentDto from './dtos/create-payment-intent.dto';
 
 export default class PaymentIntentService {

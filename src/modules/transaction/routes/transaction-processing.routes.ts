@@ -1,13 +1,12 @@
 import { Router } from 'express';
+import paymentIntentFactory from '../useCases/paymentIntent/payment-intent.factory';
 
 const transactionProcessingRoute = Router();
 
 transactionProcessingRoute.post(
   '/transaction-processing',
   (request, response) => {
-    response.send({
-      message: 'transaction-processing',
-    });
+    paymentIntentFactory().handle(request, response);
   },
 );
 
