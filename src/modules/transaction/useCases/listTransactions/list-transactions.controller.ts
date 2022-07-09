@@ -8,7 +8,7 @@ export default class ListTransactionsController {
 
   async handle(request: Request, response: Response) {
     try {
-      const { customerId } = request.body;
+      const { customerId } = request.params;
 
       const listTransactions = await this.listTransactionsService.execute(
         customerId,

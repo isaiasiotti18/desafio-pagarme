@@ -7,7 +7,7 @@ import CreatePaymentIntentDto from './dtos/create-payment-intent.dto';
 
 export default class PaymentIntentService {
   async execute(createPaymentIntentDto: CreatePaymentIntentDto) {
-    const { value, description, customerId, clientId } =
+    const { value, description, customerId } =
       createPaymentIntentDto.createTransactionDto;
 
     const {
@@ -20,15 +20,27 @@ export default class PaymentIntentService {
 
     const client = await prisma.client.findUnique({
       where: {
-        id: clientId,
+        id: 'b72b1146-596e-498b-a8f4-ebeaafba1998',
       },
     });
+
+    if (!client) {
+      throw new Error(
+        'Um erro inesperado ocorreu na hora de realizar o pagamento.',
+      );
+    }
 
     const customer = await prisma.customer.findUnique({
       where: {
         id: customerId,
       },
     });
+
+    if (!customer) {
+      throw new Error(
+        'Um erro inesperado ocorreu na hora de realizar o pagamento.',
+      );
+    }
 
     const paymentMethod = await prisma.paymentMethod.create({
       data: {
@@ -37,10 +49,11 @@ export default class PaymentIntentService {
         cardHolderName,
         validThru,
         cardVerificationValue,
+        customerId,
       },
     });
 
-    if (client === null || customer === null || paymentMethod === null) {
+    if (!paymentMethod) {
       throw new Error(
         'Um erro inesperado ocorreu na hora de realizar o pagamento.',
       );
@@ -64,26 +77,26 @@ export default class PaymentIntentService {
     // FEE LOGIC
     if (paymentMethod.cardType === CardType.credit_card) {
       setStatus = PayableStatus.waiting_funds;
-      setFee = 0.5;
+      setFee = 0.05;
       setValue = value - 100 * setFee;
-      setPaymentDate = moment().add(30, 'days').format('YYYY-MM-DD');
+      setPaymentDate = moment().add(30, 'days').format('MM-DD-YYYY hh:mm:ss');
     } else if (paymentMethod.cardType === CardType.debit_card) {
       setStatus = PayableStatus.paid;
-      setFee = 0.3;
+      setFee = 0.03;
       setValue = value - 100 * setFee;
-      setPaymentDate = moment().format('YYYY-MM-DD');
+      setPaymentDate = moment().format('MM-DD-YYYY hh:mm:ss');
     } else {
       setStatus = PayableStatus.pending;
       setFee = 0;
       setValue = value - 100 * setFee;
-      setPaymentDate = moment().format('YYYY-MM-DD');
+      setPaymentDate = moment().format('MM-DD-YYYY hh:mm:ss');
     }
 
     const newPayable = await prisma.payable.create({
       data: {
         value: setValue,
-        fee: setFee,
-        paymentDate: setPaymentDate,
+        fee: setFee * 100,
+        paymentDate: moment(setPaymentDate).toDate(),
         status: setStatus,
         transactionId: (await newTransaction).transactionId,
       },

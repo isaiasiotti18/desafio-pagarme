@@ -11,11 +11,13 @@ export default async function createTransaction(
     data: {
       value,
       description,
-      clientId: '308f41ca-e580-4292-b4e5-9926cc65e6d0',
-      paymentMethodId,
+      clientId,
       customerId,
+      paymentMethodId,
     },
   });
+
+  console.log(newTransaction);
 
   return newTransaction;
 }

@@ -1,10 +1,13 @@
 import { Router } from 'express';
 import listTransactionsFactory from '../useCases/listTransactions/list-transactions.factory';
 
-const listTransactionsRoute = Router();
+const transactionsListRoute = Router();
 
-listTransactionsRoute.get('/list-transactions', (request, response) => {
-  listTransactionsFactory().handle(request, response);
-});
+transactionsListRoute.get(
+  '/transactions-list/:customerId',
+  (request, response) => {
+    listTransactionsFactory().handle(request, response);
+  },
+);
 
-export default listTransactionsRoute;
+export default transactionsListRoute;

@@ -53,7 +53,7 @@ model PaymentMethod {
   cardType              CardType
   cardNumber            String   @unique @db.VarChar(50)
   cardHolderName        String   @db.VarChar(25)
-  validThru             DateTime @db.Date
+  validThru             String   @db.VarChar(10)
   cardVerificationValue Int      @unique @db.SmallInt
 
   customer   Customer? @relation(fields: [customerId], references: [id])
@@ -69,14 +69,14 @@ model Transaction {
 
   payable Payable?
 
-  customer   Customer @relation(fields: [customerId], references: [id])
-  customerId String   @db.Uuid
+  customer   Customer? @relation(fields: [customerId], references: [id])
+  customerId String?   @db.Uuid
 
-  client   Client @relation(fields: [clientId], references: [id])
-  clientId String @db.Uuid
+  client   Client? @relation(fields: [clientId], references: [id])
+  clientId String? @db.Uuid
 
-  paymentMethod   PaymentMethod @relation(fields: [paymentMethodId], references: [paymentMethodId])
-  paymentMethodId String        @db.Uuid
+  paymentMethod   PaymentMethod? @relation(fields: [paymentMethodId], references: [paymentMethodId])
+  paymentMethodId String?        @db.Uuid
 }
 
 model Payable {

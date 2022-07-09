@@ -7,7 +7,7 @@ export default class CreatePaymentMethodDto {
 
   cardHolderName: string;
 
-  validThru: Date;
+  validThru: string;
 
   cardVerificationValue: number;
 }

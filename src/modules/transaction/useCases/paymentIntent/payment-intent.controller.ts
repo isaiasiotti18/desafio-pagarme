@@ -17,7 +17,7 @@ export default class PaymentIntentController {
         cardType,
       } = request.body;
 
-      await this.paymentIntentService.execute({
+      const paymentIntent = await this.paymentIntentService.execute({
         createTransactionDto: {
           value,
           description,
@@ -32,15 +32,7 @@ export default class PaymentIntentController {
         },
       });
 
-      return response.json({
-        value,
-        description,
-        cardType,
-        cardNumber,
-        cardHolderName,
-        validThru,
-        cardVerificationValue,
-      });
+      return response.json(paymentIntent);
     } catch (error: any) {
       response.status(400).json({
         message: error?.message,
