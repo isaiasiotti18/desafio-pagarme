@@ -42,10 +42,12 @@ export default class PaymentIntentService {
       );
     }
 
+    const lastCardNumbers = cardNumber.substring(-4);
+
     const paymentMethod = await prisma.paymentMethod.create({
       data: {
         cardType,
-        cardNumber,
+        cardNumber: lastCardNumbers,
         cardHolderName,
         validThru,
         cardVerificationValue,
