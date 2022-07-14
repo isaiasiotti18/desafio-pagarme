@@ -105,7 +105,6 @@ export default class PaymentIntentService {
     });
 
     return {
-      transactions: { ...newTransaction },
       payable: { ...newPayable },
     };
   }
