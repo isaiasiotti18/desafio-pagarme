@@ -3,7 +3,7 @@ import { validate } from 'class-validator';
 import CreatePaymentMethodDto from 'modules/paymentMethod/dtos/create-paymentMethod.dto';
 import CreateTransactionDto from '../../createTransaction/dtos/create-transaction.dto';
 
-export default async function createPaymentIntentMiddleware(
+export default async function createTransactionProcessingMiddleware(
   request: Request,
   response: Response,
   next: NextFunction,

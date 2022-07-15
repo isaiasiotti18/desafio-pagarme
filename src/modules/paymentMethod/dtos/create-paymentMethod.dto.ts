@@ -1,6 +1,5 @@
 import { CardType } from '@prisma/client';
 import {
-  IsCreditCard,
   IsEnum,
   IsNotEmpty,
   IsNumber,

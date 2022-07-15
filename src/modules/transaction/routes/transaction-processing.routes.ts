@@ -1,14 +1,14 @@
 import { Router } from 'express';
-import paymentIntentFactory from '../useCases/paymentIntent/payment-intent.factory';
-import createPaymentIntentMiddleware from '../useCases/paymentIntent/middlewares/payment-intent.middleware';
+import transactionProcessingFactory from '../useCases/transactionProcessing/transaction-processing.factory';
+import createTransactionProcessingMiddleware from '../useCases/transactionProcessing/middlewares/transaction-processing.middleware';
 
 const transactionProcessingRoute = Router();
 
 transactionProcessingRoute.post(
   '/transaction-processing',
-  createPaymentIntentMiddleware,
+  createTransactionProcessingMiddleware,
   (request, response) => {
-    paymentIntentFactory().handle(request, response);
+    transactionProcessingFactory().handle(request, response);
   },
 );
 
