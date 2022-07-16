@@ -1,5 +1,6 @@
 /* eslint-disable no-const-assign */
 /* eslint-disable no-unsafe-optional-chaining */
+import { PayableStatus } from '@prisma/client';
 import { prisma } from 'config/database/prisma-client';
 import moment from 'moment';
 import createTransaction from '../createTransaction/create-transaction.function';
@@ -52,7 +53,6 @@ export default class TransactionProcessingService {
     let paymentMethod = await prisma.paymentMethod.findUnique({
       where: {
         cardNumber,
-        cardVerificationValue,
       },
     });
 
@@ -89,9 +89,30 @@ export default class TransactionProcessingService {
         paymentDate: moment(feeLogic?.paymentDate).toDate(),
         status: feeLogic?.status!,
         transactionId: (await newTransaction).transactionId,
-        clientId: 'b72b1146-596e-498b-a8f4-ebeaafba1998',
+        clientId: client.id,
       },
     });
+
+    // Logica dos recebiveis do cliente
+    if (newPayable.status === PayableStatus.waiting_funds) {
+      await prisma.client.update({
+        where: {
+          id: client.id,
+        },
+        data: {
+          waitingFunds: { increment: newPayable.value },
+        },
+      });
+    } else if (newPayable.status === PayableStatus.paid) {
+      await prisma.client.update({
+        where: {
+          id: client.id,
+        },
+        data: {
+          availableBalance: { increment: newPayable.value },
+        },
+      });
+    }
 
     return {
       payable: { ...newPayable },

@@ -1,30 +1,20 @@
-import { Request, Response, NextFunction } from 'express';
 import { validate } from 'class-validator';
+import { Request, Response, NextFunction } from 'express';
 import CreatePaymentMethodDto from 'modules/paymentMethod/dtos/create-paymentMethod.dto';
-import CreateTransactionDto from '../../createTransaction/dtos/create-transaction.dto';
 
-export default async function createTransactionProcessingMiddleware(
+export default async function paymentMethodMiddleware(
   request: Request,
   response: Response,
   next: NextFunction,
 ) {
   try {
     const {
-      customerId,
-      value,
-      description,
       cardNumber,
       cardHolderName,
       validThru,
       cardVerificationValue,
       cardType,
     } = request.body;
-
-    const createTransactionDto = new CreateTransactionDto();
-
-    createTransactionDto.customerId = customerId;
-    createTransactionDto.description = description;
-    createTransactionDto.value = value;
 
     const createPaymentMethodDto = new CreatePaymentMethodDto();
 
@@ -34,10 +24,7 @@ export default async function createTransactionProcessingMiddleware(
     createPaymentMethodDto.cardVerificationValue = cardVerificationValue;
     createPaymentMethodDto.cardType = cardType;
 
-    const validations = await validate({
-      ...createTransactionDto,
-      ...createPaymentMethodDto,
-    });
+    const validations = await validate(createPaymentMethodDto);
 
     if (validations.length) {
       return response.status(400).json({

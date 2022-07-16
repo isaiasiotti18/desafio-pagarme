@@ -4,6 +4,7 @@ import {
   IsNotEmpty,
   IsNumber,
   IsString,
+  Length,
   MaxLength,
   MinLength,
 } from 'class-validator';
@@ -29,7 +30,5 @@ export default class CreatePaymentMethodDto {
 
   @IsNumber()
   @IsNotEmpty()
-  @MinLength(3)
-  @MaxLength(4)
   cardVerificationValue: number;
 }

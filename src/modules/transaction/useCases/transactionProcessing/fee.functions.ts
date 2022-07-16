@@ -14,7 +14,7 @@ export default async function fee(value: number, paymentMethod: PaymentMethod) {
 
   if (paymentMethod.cardType === CardType.debit_card) {
     return {
-      status: PayableStatus.waiting_funds,
+      status: PayableStatus.paid,
       fee: 0.03,
       value: value - 100 * 0.03,
       paymentDate: moment().format('MM-DD-YYYY hh:mm:ss'),
