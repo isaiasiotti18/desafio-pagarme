@@ -14,9 +14,7 @@ export default class ListTransactionsController {
         customerId,
       );
 
-      return response.json({
-        ...listTransactions,
-      });
+      return response.json(listTransactions);
     } catch (error: any) {
       response.status(400).json({
         message: error?.message,

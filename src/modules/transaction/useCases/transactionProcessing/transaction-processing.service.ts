@@ -45,9 +45,6 @@ export default class TransactionProcessingService {
         'Um erro inesperado ocorreu na hora de realizar o pagamento.',
       );
     }
-
-    const lastCardNumbers = cardNumber.substring(-4);
-
     // Se já existir a forma de pagamento
 
     let paymentMethod = await prisma.paymentMethod.findUnique({
@@ -55,6 +52,8 @@ export default class TransactionProcessingService {
         cardNumber,
       },
     });
+
+    const lastCardNumbers = cardNumber.substring(-4);
 
     if (!paymentMethod) {
       paymentMethod = await prisma.paymentMethod.create({

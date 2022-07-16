@@ -8,24 +8,22 @@ export default class ListTransactionService {
       where: {
         customerId,
       },
-    });
-
-    return listTransactions.map(async transaction => {
-      const paymentMethod = await prisma.paymentMethod.findUnique({
-        where: {
-          paymentMethodId: transaction.paymentMethodId,
+      select: {
+        value: true,
+        description: true,
+        paymentMethod: {
+          select: {
+            cardType: true,
+            cardNumber: true,
+            cardHolderName: true,
+            validThru: true,
+            cardVerificationValue: true,
+          },
         },
-      });
-
-      return {
-        valor_transacao: transaction.value,
-        descricao: transaction.description,
-        forma_pagamento: paymentMethod?.cardType,
-        numero_cartao: paymentMethod?.cardNumber,
-        portador_cartao: paymentMethod?.cardHolderName,
-        valid_thru: paymentMethod?.validThru,
-        cvv: paymentMethod?.cardVerificationValue,
-      };
+        customerId: false,
+      },
     });
+
+    return listTransactions;
   }
 }
