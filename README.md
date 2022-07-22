@@ -1,8 +1,6 @@
 # pagarme-challenge
 This a small challenge proposed by Pagar.me
 
-## Status
-
 ## Techs
 
 - [X] NodeJs e Typescript
@@ -30,8 +28,15 @@ docker run --name pagarmechallenge -p 5432:5432 -e POSTGRES_PASSWORD=mypassword,
 [GET] : /api/v1/transactions/transactions-list/:customerId
 [POST] : /api/v1/transactions/transactions-processing
 
+## Status
+
+- [X] Finished!
+
 ## Author
+
+[Linkedin - Isaias Iotti](www.linkedin.com/in/isaiasiotti)
 
 ## License
 
+MIT License
 
