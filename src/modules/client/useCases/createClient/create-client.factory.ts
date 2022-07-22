@@ -1,4 +1,4 @@
-import ClientRepository from 'modules/client/client.repository';
+import ClientRepository from '../../client.repository';
 import CreateClientController from './create-client.controller';
 import CreateClientService from './create-client.service';
 

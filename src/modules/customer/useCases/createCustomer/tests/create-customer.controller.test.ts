@@ -5,7 +5,7 @@
 /* eslint-disable no-undef */
 
 import request from 'supertest';
-import app from '../../../../app';
+import app from '../../../../../app';
 import CreateCustomerDto from '../dtos/create-customer.dto';
 
 describe('Create Customer Controller', () => {

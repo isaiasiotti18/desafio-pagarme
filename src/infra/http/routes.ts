@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import createClientRoute from 'modules/client/routes/create-client.route';
+import createClientRoute from '../../modules/client/routes/create-client.route';
 import transactionProcessingRoute from '../../modules/transaction/routes/transaction-processing.routes';
 import transactionsListRoute from '../../modules/transaction/routes/transactions-list.routes';
 import createCustomerRoute from '../../modules/customer/routes/create-customer.route';

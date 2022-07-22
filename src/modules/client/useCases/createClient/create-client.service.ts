@@ -1,6 +1,6 @@
-import ClientRepositoryInterface from 'modules/client/interfaces/client-repository.interface';
-import ClientInterface from 'modules/client/interfaces/client.interface';
 import * as bcrypt from 'bcryptjs';
+import ClientInterface from '../../interfaces/client.interface';
+import ClientRepositoryInterface from '../../interfaces/client-repository.interface';
 import CreateClientDto from './dtos/create-client.dto';
 
 export default class CreateClientService {

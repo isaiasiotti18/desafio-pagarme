@@ -1,6 +1,6 @@
 /* eslint-disable no-unreachable-loop */
 /* eslint-disable no-restricted-syntax */
-import { prisma } from 'config/database/prisma-client';
+import { prisma } from '../../../../config/database/prisma-client';
 
 export default class ListTransactionService {
   async execute(customerId: string) {

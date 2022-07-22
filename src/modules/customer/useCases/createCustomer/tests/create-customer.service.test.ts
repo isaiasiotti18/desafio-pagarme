@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import { CustomerRepositoryInterface } from 'modules/customer/interfaces/customer-repository.interface';
+import CustomerRepositoryInterface from '../../../interfaces/customer-repository.interface';
 import CreateCustomerService from '../create-customer.service';
 import CustomerRepositoryInMemory from '../inMemory/customer.repository.inMemory';
 import CreateCustomerDto from '../dtos/create-customer.dto';

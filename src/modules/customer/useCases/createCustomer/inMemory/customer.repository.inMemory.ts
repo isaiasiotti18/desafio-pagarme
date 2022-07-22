@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
-import { CustomerRepositoryInterface } from 'modules/customer/interfaces/customer-repository.interface';
-import { CustomerInterface } from 'modules/customer/interfaces/customer.interface';
+import CustomerRepositoryInterface from 'modules/customer/interfaces/customer-repository.interface';
+import CustomerInterface from 'modules/customer/interfaces/customer.interface';
 import CreateCustomerDto from '../dtos/create-customer.dto';
 
 export default class CustomerRepositoryInMemory

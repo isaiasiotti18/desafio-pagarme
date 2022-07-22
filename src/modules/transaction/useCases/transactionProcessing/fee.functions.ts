@@ -8,7 +8,7 @@ export default async function fee(value: number, paymentMethod: PaymentMethod) {
       status: PayableStatus.waiting_funds,
       fee: 0.05,
       value: value - 100 * 0.05,
-      paymentDate: moment().add(30, 'days').format('MM-DD-YYYY hh:mm:ss'),
+      paymentDate: moment().add(30, 'days').format('YYYY-MM-DD'),
     };
   }
 
@@ -17,7 +17,7 @@ export default async function fee(value: number, paymentMethod: PaymentMethod) {
       status: PayableStatus.paid,
       fee: 0.03,
       value: value - 100 * 0.03,
-      paymentDate: moment().format('MM-DD-YYYY hh:mm:ss'),
+      paymentDate: moment().format('YYYY-MM-DD'),
     };
   }
 }

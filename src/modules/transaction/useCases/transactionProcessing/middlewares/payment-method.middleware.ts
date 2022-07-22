@@ -1,6 +1,6 @@
 import { validate } from 'class-validator';
 import { Request, Response, NextFunction } from 'express';
-import CreatePaymentMethodDto from 'modules/paymentMethod/dtos/create-paymentMethod.dto';
+import CreatePaymentMethodDto from '../../../../paymentMethod/dtos/create-paymentMethod.dto';
 
 export default async function paymentMethodMiddleware(
   request: Request,

@@ -1,4 +1,4 @@
-import { prisma } from 'config/database/prisma-client';
+import { prisma } from '../../../../config/database/prisma-client';
 import CreateTransactionDto from './dtos/create-transaction.dto';
 
 export default async function createTransaction(

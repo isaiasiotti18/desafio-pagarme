@@ -83,7 +83,7 @@ model Payable {
   payableId   String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   value       Decimal       @db.Money
   status      PayableStatus
-  paymentDate DateTime      @db.Date
+  paymentDate String        @db.VarChar(50)
   fee         Int
 
   transaction   Transaction @relation(fields: [transactionId], references: [transactionId])

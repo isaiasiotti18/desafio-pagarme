@@ -1,8 +1,8 @@
 /* eslint-disable no-const-assign */
 /* eslint-disable no-unsafe-optional-chaining */
 import { PayableStatus } from '@prisma/client';
-import { prisma } from 'config/database/prisma-client';
 import moment from 'moment';
+import { prisma } from '../../../../config/database/prisma-client';
 import createTransaction from '../createTransaction/create-transaction.function';
 import CreateTransactionProcessingDto from './dtos/create-transaction-processing.dto';
 import fee from './fee.functions';
@@ -85,7 +85,7 @@ export default class TransactionProcessingService {
       data: {
         value: feeLogic?.value!,
         fee: feeLogic?.fee! * 100,
-        paymentDate: moment(feeLogic?.paymentDate).toDate(),
+        paymentDate: feeLogic?.paymentDate!,
         status: feeLogic?.status!,
         transactionId: (await newTransaction).transactionId,
         clientId: client.id,
@@ -114,7 +114,7 @@ export default class TransactionProcessingService {
     }
 
     return {
-      payable: { ...newPayable },
+      ...newPayable,
     };
   }
 }
