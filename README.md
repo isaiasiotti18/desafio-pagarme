@@ -40,3 +40,5 @@ docker run --name pagarmechallenge -p 5432:5432 -e POSTGRES_PASSWORD=mypassword,
 
 MIT License
 
+Isaias Batista dos Santos - 2022
+
