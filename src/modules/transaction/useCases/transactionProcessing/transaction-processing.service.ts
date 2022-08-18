@@ -30,7 +30,7 @@ export default class TransactionProcessingService {
 
     if (!client) {
       throw new Error(
-        'Um erro inesperado ocorreu na hora de realizar o pagamento.',
+        `Client: Um erro inesperado ocorreu na hora de realizar o pagamento.`,
       );
     }
 
@@ -42,7 +42,7 @@ export default class TransactionProcessingService {
 
     if (!customer) {
       throw new Error(
-        'Um erro inesperado ocorreu na hora de realizar o pagamento.',
+        'Customer: Um erro inesperado ocorreu na hora de realizar o pagamento.',
       );
     }
     // Se já existir a forma de pagamento

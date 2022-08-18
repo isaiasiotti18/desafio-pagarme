@@ -17,7 +17,5 @@ export default async function createTransaction(
     },
   });
 
-  console.log(newTransaction);
-
   return newTransaction;
 }

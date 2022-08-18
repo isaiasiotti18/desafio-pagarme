@@ -7,6 +7,7 @@ const { execSync } = require('child_process');
 const { v4: uuid } = require('uuid');
 const { resolve } = require('path');
 const { Client } = require('pg');
+const { prisma } = require('@prisma/client');
 
 const prismaCli = './node_modules/.bin/prisma';
 
